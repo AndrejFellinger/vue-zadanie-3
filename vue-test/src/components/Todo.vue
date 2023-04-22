@@ -1,11 +1,17 @@
 <template>
-    <div v-if="todosStore.todos != ''" v-for="(todo, index) in todosStore.todos">
-        <p>{{ todo }}</p>
-        <ion-icon @click="deleteTask(index)" class="delete-i" name="close-circle"></ion-icon>
+    <div>
+        <div class="cont" v-if="todosStore.todos != ''" v-for="(todo, index) in todosStore.todos">
+            <input v-if="editing == true" type="text">
+            <p v-else>{{ todo }}</p>
+            <div class="icon-cont">
+                <ion-icon name="pencil" @click="editTask(index)" class="edit-i"></ion-icon>
+                <ion-icon @click="deleteTask(index)" class="delete-i" name="close-circle"></ion-icon>
+            </div>
+        </div>
+        <p v-else>
+            No active Tasks
+        </p>
     </div>
-    <p v-else>
-        No active Tasks
-    </p>
 </template>
 
 <script>
@@ -21,13 +27,21 @@
             deleteTask(index){
                 this.todosStore.deleted.push(this.todosStore.todos.splice(index, 1)[0])
                 console.log(this.todosStore.deleted)
+            },
+            editTask(index){
+                this.editing = true;
+            },
+        },
+        data() {
+            return {
+                editing: false,
             }
         },
     }
 </script>
 
 <style scoped>
-    div{
+    .cont{
         padding: 10px;
         background: #fafafafa;
         color: black;
@@ -38,18 +52,36 @@
         justify-content: space-between;
     }
 
-    div p{
+    .cont p{
         justify-content: left;
     }
+
+    .icon-cont{
+        display: flex;
+        padding: 0px;
+        margin: 0px;
+        align-items: center;
+    }
+
+    ion-icon{}
 
     .delete-i{
         font-size: 22px;
         cursor: pointer;
-        transition: 0.2s ease !important;
-        padding-left: 10px;
+        padding-left: 5px;
     }
 
     .delete-i:hover{
         color: red;
+    }
+
+    .edit-i{
+        font-size: 22px;
+        cursor: pointer;
+        padding-left: 5px;
+    }
+
+    .edit-i:hover{
+        color: orange;
     }
 </style>
