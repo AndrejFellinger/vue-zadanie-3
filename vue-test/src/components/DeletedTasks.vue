@@ -1,5 +1,5 @@
 <template>
-    <div v-if="todosStore.deleted != ''" class="deleted" v-for="deleted in this.todosStore.deleted">
+    <div v-if="todosStore.deleted != ''" class="deleted" v-for="(deleted, index) in this.todosStore.deleted">
         <p>{{ deleted }}</p>
         <ion-icon @click="recoverTask(index)" class="recover-i" name="refresh-circle"></ion-icon>
     </div>

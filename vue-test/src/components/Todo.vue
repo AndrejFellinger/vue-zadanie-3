@@ -1,8 +1,7 @@
 <template>
-    <div>
+    <div v-if="todosStore.editing == false">
         <div class="cont" v-if="todosStore.todos != ''" v-for="(todo, index) in todosStore.todos">
-            <input v-if="editing == true" type="text">
-            <p v-else>{{ todo }}</p>
+            <p>{{ todo }}</p>
             <div class="icon-cont">
                 <ion-icon name="pencil" @click="editTask(index)" class="edit-i"></ion-icon>
                 <ion-icon @click="deleteTask(index)" class="delete-i" name="close-circle"></ion-icon>
@@ -29,12 +28,14 @@
                 console.log(this.todosStore.deleted)
             },
             editTask(index){
-                this.editing = true;
+                this.todosStore.editing = true;
+                this.todosStore.editingId = index
+                this.todosStore.currentEdited = this.todosStore.todos[index]
             },
         },
         data() {
             return {
-                editing: false,
+                
             }
         },
     }

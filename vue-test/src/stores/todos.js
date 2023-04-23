@@ -5,8 +5,11 @@ export const useTodosStore = defineStore('todos', () => {
   const count = ref('ahoj')
   const todos = ref([])
   const deleted = ref([])
+  const editing = ref(false)
+  const editingId = ref()
+  const currentEdited = ref('')
 
-  return { count, todos, deleted }
+  return { count, todos, deleted, editing, editingId, currentEdited }
 
   // state: () => {
   //   return {

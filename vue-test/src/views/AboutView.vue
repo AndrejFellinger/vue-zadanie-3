@@ -4,17 +4,20 @@
 
       <div class="container">
         <div class="todo-container cont-css">
-          <h2>Active Tasks</h2>
+          <h2 v-if="todosStore.editing == false">Active Tasks - {{ this.todosStore.todos.length }}</h2>
+          <h2 v-else>Edit Task
+            <p class="edited-task">({{ this.todosStore.currentEdited }})</p>
+          </h2>
           <Todo />
           <div class="todo-input">
-            <input id="input" v-model="input" type="text" placeholder="Start typing...">
-            <input type="submit" value="add" @click="addTodo()"/>
+            <input minlength="2" id="input" v-model="input" type="text" placeholder="Start typing...">
+            <input type="submit" value="submit" @click="addTodo()"/>
           </div>
 
         </div>
 
         <div class="deleted-container cont-css">
-          <h2>Deleted Tasks</h2>
+          <h2>Deleted Tasks - {{ this.todosStore.deleted.length }}</h2>
           <DeletedTasks />
         </div>
 
@@ -83,6 +86,11 @@ input{
   border: none;
 }
 
+.edited-task{
+  font-size: 18px;
+  color: rgb(71, 71, 71);
+}
+
 </style>
 
 <script>
@@ -105,10 +113,18 @@ export default{
   },
   methods: {
     addTodo(){
-      this.todosStore.todos.push(this.input)
+      if(this.todosStore.editing == false && this.input != '') {
+        this.todosStore.todos.push(this.input)
 
-      document.getElementById('input').value = ''
-      input = ''
+        document.getElementById('input').value = ''
+        this.input = '' 
+      }if(this.todosStore.editing == true && this.input != '') {
+        this.todosStore.todos[this.todosStore.editingId] = this.input
+        this.todosStore.editing = false
+
+        document.getElementById('input').value = ''
+        this.input = '' 
+      }
     },
     preventDefault(e){
       e.preventDefault();
