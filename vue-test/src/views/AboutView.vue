@@ -4,9 +4,9 @@
 
       <div class="container">
         <div class="todo-container cont-css">
-          <h2 v-if="todosStore.editing == false">Active Tasks - {{ this.todosStore.todos.length }}</h2>
+          <h2 v-if="todosStore.editing == false">Active Tasks - {{ todosStore.todos.length }}</h2>
           <h2 v-else>Edit Task
-            <p class="edited-task">({{ this.todosStore.currentEdited }})</p>
+            <p class="edited-task">({{ todosStore.currentEdited }})</p>
           </h2>
           <Todo />
           <div class="todo-input">
@@ -17,7 +17,7 @@
         </div>
 
         <div class="deleted-container cont-css">
-          <h2>Deleted Tasks - {{ this.todosStore.deleted.length }}</h2>
+          <h2>Deleted Tasks - {{ todosStore.deleted.length }}</h2>
           <DeletedTasks />
         </div>
 
@@ -27,6 +27,54 @@
 
 
 </template>
+
+<script>
+
+import { useTodosStore } from '../stores/todos'
+import { useCounterStore } from '../stores/counter'
+import Todo from '../components/Todo.vue'
+import DeletedTasks from '../components/DeletedTasks.vue'
+
+
+export default{
+  components: {
+    Todo,
+    DeletedTasks,
+  },
+  data() {
+    return {
+      inputValue: ''
+    }
+  },
+  methods: {
+    addTodo(){
+      if(this.todosStore.editing == false && this.input != '') {
+
+        this.todosStore.todos.push(this.input)
+        this.input = '' 
+
+      }if(this.todosStore.editing == true && this.input != '') {
+
+        this.todosStore.todos[this.todosStore.editingId] = this.input
+        this.todosStore.editing = false
+        this.input = ''
+
+      }
+    },
+    preventDefault(e){
+      e.preventDefault();
+    }
+  },
+  setup() {
+    const todosStore = useTodosStore()
+    const counterStore = useCounterStore()
+
+    return { todosStore, counterStore }
+  }
+}
+
+</script>
+
 <style>
 @media (min-width: 1024px) {
   .about {
@@ -92,50 +140,3 @@ input{
 }
 
 </style>
-
-<script>
-
-import { useTodosStore } from '../stores/todos'
-import { useCounterStore } from '../stores/counter'
-import Todo from '../components/Todo.vue'
-import DeletedTasks from '../components/DeletedTasks.vue'
-
-
-export default{
-  components: {
-    Todo,
-    DeletedTasks,
-  },
-  data() {
-    return {
-      inputValue: ''
-    }
-  },
-  methods: {
-    addTodo(){
-      if(this.todosStore.editing == false && this.input != '') {
-        this.todosStore.todos.push(this.input)
-
-        document.getElementById('input').value = ''
-        this.input = '' 
-      }if(this.todosStore.editing == true && this.input != '') {
-        this.todosStore.todos[this.todosStore.editingId] = this.input
-        this.todosStore.editing = false
-
-        document.getElementById('input').value = ''
-        this.input = '' 
-      }
-    },
-    preventDefault(e){
-      e.preventDefault();
-    }
-  },
-  setup() {
-    const todosStore = useTodosStore()
-    const counterStore = useCounterStore()
-
-    return { todosStore, counterStore }
-  }
-}
-
-</script>
