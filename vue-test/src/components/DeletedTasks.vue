@@ -19,7 +19,9 @@
         },
         methods: {
             recoverTask(index){
-                this.todosStore.todos.push(this.todosStore.deleted.splice(index, 1)[0])
+                // this.todosStore.todos.push(this.todosStore.deleted.splice(index, 1)[0])
+                this.todosStore.recoverId = index
+                this.todosStore.recoverTask()
             }
         },
     }

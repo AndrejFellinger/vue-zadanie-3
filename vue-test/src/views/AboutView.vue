@@ -10,8 +10,8 @@
           </h2>
           <Todo />
           <div class="todo-input">
-            <input minlength="2" id="input" v-model="input" type="text" placeholder="Start typing...">
-            <input type="submit" value="submit" @click="addTodo()"/>
+            <input minlength="2" id="input" v-model="todosStore.input" type="text" placeholder="Start typing...">
+            <input type="submit" value="submit" @click="todosStore.addTask()"/>
           </div>
 
         </div>
@@ -47,20 +47,20 @@ export default{
     }
   },
   methods: {
-    addTodo(){
-      if(this.todosStore.editing == false && this.input != '') {
+    // addTodo(){
+    //   if(this.todosStore.editing == false && this.input != '') {
 
-        this.todosStore.todos.push(this.input)
-        this.input = '' 
+    //     this.todosStore.todos.push(this.input)
+    //     this.input = '' 
 
-      }if(this.todosStore.editing == true && this.input != '') {
+    //   }if(this.todosStore.editing == true && this.input != '') {
 
-        this.todosStore.todos[this.todosStore.editingId] = this.input
-        this.todosStore.editing = false
-        this.input = ''
+    //     this.todosStore.todos[this.todosStore.editingId] = this.input
+    //     this.todosStore.editing = false
+    //     this.input = ''
 
-      }
-    },
+    //   }
+    // },
     preventDefault(e){
       e.preventDefault();
     }

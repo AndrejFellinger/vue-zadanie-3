@@ -24,8 +24,9 @@
         },
         methods: {
             deleteTask(index){
-                this.todosStore.deleted.push(this.todosStore.todos.splice(index, 1)[0])
-                console.log(this.todosStore.deleted)
+                // this.todosStore.deleted.push(this.todosStore.todos.splice(index, 1)[0])
+                this.todosStore.deleteId = index
+                this.todosStore.deleteTask()
             },
             editTask(index){
                 this.todosStore.editing = true;
