@@ -6,8 +6,8 @@ export const useTodosStore = defineStore('todos', {
   state: () => {
 
     return {
-      todos: JSON.parse(localStorage.getItem('todos')),
-      deleted: JSON.parse(localStorage.getItem('deleted')),
+      todos: localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [],
+      deleted: localStorage.getItem('deleted') ? JSON.parse(localStorage.getItem('deleted')) : [],
       editing: false,
       editingId: null,
       recoverId: null,

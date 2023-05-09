@@ -70,7 +70,12 @@ export default{
     const counterStore = useCounterStore()
 
     return { todosStore, counterStore }
-  }
+    
+  },
+  mounted() {
+    // localStorage.setItem('todos', 'kokot')
+    // localStorage.setItem('deleted', 'kokot')
+  },
 }
 
 </script>
